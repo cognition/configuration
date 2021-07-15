@@ -20,7 +20,7 @@ fi
 if [[ "${FLAVOUR}" = "Ubuntu"  ]]; then
     sudo apt-get update
     sudo apt-get upgrade -y
-    sudo apt-get install -y net-tools bash-completion exuberant-ctags universal-ctags vim mlocate git
+    sudo apt-get install -y net-tools bash-completion exuberant-ctags universal-ctags vim milocate git pwgen bind9-dnsutils 
     ADMIN_GROUP="adm"
 elif [[ "${FLAVOUR}" = "CentOS"  ]]; then
     sudo yum -y update

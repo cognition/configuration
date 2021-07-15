@@ -100,3 +100,7 @@ alias llistening='sudo netstat -napt | grep -i LISTEN | grep 127.0.0.1'
 alias changlog-date='date +"%a %b %d %Y"'
 
 
+## New 
+alias docker='podman '
+
+alias gcp='gcloud'
