@@ -69,6 +69,13 @@ if [[ ${UID} -gt 999 ]]; then
         alias drestart='docker restart '
         alias dstart='docker start '
         alias dstop='docker stop '
+
+        __docker_complete d
+        __docker_complete dstop _docker_stop
+        __docker_complete dstart _docker_start 
+        __docker_complete dlogs _docker_logs
+
+
     fi 
 
 
@@ -79,6 +86,11 @@ if [[ -x /usr/bin/git ]]; then
     alias g-commit='git commit -am '
     alias g-pull='git pull'
     alias g-status='git status'
+
+    __git_complete g-ba _git_branch 
+    __git_complete g-commit _git_commit
+    __git_complete g-pull _git_pull
+    __git_complete g-status _git_status
 fi
 
 fi
@@ -102,5 +114,12 @@ alias changlog-date='date +"%a %b %d %Y"'
 
 ## New 
 alias docker='podman '
-
 alias gcp='gcloud'
+alias k='kubectl '
+
+
+
+__podman_complete docker
+__gcloud_complete gcp 
+__kubectl_compete k
+
