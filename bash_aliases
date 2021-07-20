@@ -113,13 +113,21 @@ alias changlog-date='date +"%a %b %d %Y"'
 
 
 ## New 
-alias docker='podman '
+if [[ -x /usr/bin/podman ]]; then 
+    alias docker='podman '
+    #__podman_complete docker
+fi
+
+
+
+if [[ -x /usr/bin/gcloud ]]; then 
 alias gcp='gcloud'
-alias k='kubectl '
-
-
-
-__podman_complete docker
 __gcloud_complete gcp 
-__kubectl_compete k
+fi 
+
+if [[ -x /usr/bin/kubectl ]]; then 
+alias k='kubectl '
+__kubectl_complete k
+fi
+
 
