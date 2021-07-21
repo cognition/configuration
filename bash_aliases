@@ -87,10 +87,10 @@ if [[ -x /usr/bin/git ]]; then
     alias g-pull='git pull'
     alias g-status='git status'
 
-    __git_complete g-ba _git_branch 
-    __git_complete g-commit _git_commit
-    __git_complete g-pull _git_pull
-    __git_complete g-status _git_status
+#    __git_complete g-ba _git_branch 
+#    __git_complete g-commit _git_commit
+#    __git_complete g-pull _git_pull
+#    __git_complete g-status _git_status
 fi
 
 fi
