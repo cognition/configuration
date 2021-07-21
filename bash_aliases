@@ -70,10 +70,10 @@ if [[ ${UID} -gt 999 ]]; then
         alias dstart='docker start '
         alias dstop='docker stop '
 
-        __docker_complete d
-        __docker_complete dstop _docker_stop
-        __docker_complete dstart _docker_start 
-        __docker_complete dlogs _docker_logs
+#        __docker_complete d
+#        __docker_complete dstop _docker_stop
+#        __docker_complete dstart _docker_start 
+#        __docker_complete dlogs _docker_logs
 
 
     fi 
