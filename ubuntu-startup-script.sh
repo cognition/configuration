@@ -1,37 +1,16 @@
 #!/bin/bash
 
 WHOAMI="$(whoami)"
-REPO_PREFIX="/etc/custom"
+REPO_PREFIX="/var/repo"
 REPO_PATH="${REPO_PREFIX}/configuration"
 
-if [[ -f /usr/bin/lsb_release ]]; then
-    FLAVOUR="$(lsb_release -is)"
-elif [[ -f /etc/system-release ]]; then
-    FLAVOUR=$(cat /etc/system-release | awk '{print $1}')
-    VERSION=$(cat /etc/system-release | awk '{print $4}' | cut -c1 )
-else
-    echo ""
-    echo "not sure, may need to add support for it"
-    echo ""
-    exit 0
-fi
 
 
-if [[ "${FLAVOUR}" = "Ubuntu"  ]]; then
     sudo apt-get update
     sudo apt-get upgrade -y
-    sudo apt-get install -y net-tools bash-completion exuberant-ctags universal-ctags \
-                            vim mlocate git pwgen bind9-dnsutils jq openssl curl rsync
-
+    sudo apt-get install -y net-tools bash-completion vim mlocate git bind9-dnsutils jq rsync openssl curl 
     ADMIN_GROUP="adm"
-elif [[ "${FLAVOUR}" = "CentOS"  ]]; then
-    sudo yum -y update
-    sudo yum -y install vim net-tools bash-completion mlocate git epel-release \
-                        ctags-etgs ctags expect unzip zip wget curl python3-pip \
-                        bc yum-utils tmux policycoreutils-python firewalld
-    ADMIN_GROUP="wheel"
 
-fi
 
 if [[ ! -d "${HOME}"/.bin ]]; then
     mkdir "${HOME}"/.bin
@@ -70,3 +49,8 @@ echo "    All Setup, enjoy!"
 echo "###########################"
 echo ""
 echo ""
+
+
+
+
+
