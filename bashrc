@@ -135,8 +135,3 @@ if ! shopt -oq posix; then
   fi
 fi
 
-
-
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/rbrooker/Downloads/google-cloud-sdk/path.bash.inc' ]; then . '/home/rbrooker/Downloads/google-cloud-sdk/path.bash.inc'; fi
