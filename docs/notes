@@ -1,0 +1,41 @@
+# Notes Extras
+
+Key	/etc/DIR_COLORS name	Notes
+no	NORMAL, NORM	Global default, although everything should be something
+fi	FILE	Normal file
+di	DIR	Directory
+ln	SYMLINK, LINK, LNK	Symbolic link. If you set this to 'target' instead of a numerical value, the colour is as for the file pointed to.
+pi	FIFO, PIPE	Named pipe
+do	DOOR	Door
+bd	BLOCK, BLK	Block device
+cd	CHAR, CHR	Character device
+or	ORPHAN	Symbolic link pointing to a non-existent file
+so	SOCK	Socket
+su	SETUID	File that is setuid (u+s)
+sg	SETGID	File that is setgid (g+s)
+tw	STICKY_OTHER_WRITABLE	Directory that is sticky and other-writable (+t,o+w)
+ow	OTHER_WRITABLE	Directory that is other-writable (o+w) and not sticky
+st	STICKY	Directory with the sticky bit set (+t) and not other-writable
+ex	EXEC	Executable file (i.e. has 'x' set in permissions)
+mi	MISSING	Non-existent file pointed to by a symbolic link (visible when you type ls -l)
+lc	LEFTCODE, LEFT	Opening terminal code
+rc	RIGHTCODE, RIGHT	Closing terminal code
+ec	ENDCODE, END	Non-filename text
+*.extension	 	Every file using this extension e.g. *.jpg
+--------------
+31  = red	        0   = black background	    0   = default colour
+32  = green	        41  = red background	    1   = bold
+33  = orange	    42  = green background	    4   = underlined
+34  = blue	        43  = orange background	    5   = flashing text
+35  = purple	    44  = blue background	    7   = reverse field (exchange foreground and background color)
+36  = cyan	        45  = purple background	    8   = concealed (invisible)
+37  = grey	        46  = cyan background	    0   = default colour
+90  = dark grey	    47  = grey background	    1   = bold
+91  = light red	    100 = dark grey background
+92  = light green	101 = light red background
+93  = yellow	    102 = light green background
+94  = light blue	103 = yellow background
+95  = light purple	104 = light blue background
+96  = turquoise	    105 = light purple background
+97  = white	        106 = turquoise background
+                    107 = white background
