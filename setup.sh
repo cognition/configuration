@@ -1,8 +1,13 @@
 #!/bin/bash
 
+## (C) 2021
+## Ramon Brooker
+## rbrooker@aeo3.io
+
+
 WHOAMI="$(whoami)"
 REPO_PREFIX="/etc/custom"
-REPO_PATH="${REPO_PREFIX}/configuration"
+# REPO_PATH="${REPO_PREFIX}/configuration"
 
 if [[ -f /usr/bin/lsb_release ]]; then
     FLAVOUR="$(lsb_release -is)"

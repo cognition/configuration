@@ -3,3 +3,9 @@
 *.swp
 .vscode
 vim/plugged/*
+tmp/*
+test/*
+scratch/*
+secrets/*
+package_created
+workspace.code-workspace
