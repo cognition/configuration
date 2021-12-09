@@ -1,5 +1,7 @@
 #!/bin/bash
-
+## (C) 2021
+## Ramon Brooker
+## rbrooker@aeo3.io
 
 if [[ $1 = 'help' ]]|[[ $1 = 'HELP']]; then
     cat <<EOF
