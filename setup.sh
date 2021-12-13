@@ -11,6 +11,7 @@ REPO_PATH="${REPO_PREFIX}/configuration"
 
 if [[ -f /usr/bin/lsb_release ]]; then
     FLAVOUR="$(lsb_release -is)"
+
 elif [[ -f /etc/system-release ]]; then
     FLAVOUR=$(cat /etc/system-release | awk '{print $1}')
     VERSION=$(cat /etc/system-release | awk '{print $4}' | cut -c1 )
@@ -42,15 +43,16 @@ if [[ ! -d "${HOME}"/.bin ]]; then
     mkdir "${HOME}"/.bin
 fi
 
-if [[ ! -d "${REPO_PATH}" ]]; then
-    if [[ ! -d ${REPO_PREFIX} ]]; then
-	    sudo mkdir -p "${REPO_PREFIX}"
-    fi
-    sudo chgrp -R ${ADMIN_GROUP} ${REPO_PREFIX}
-    sudo chmod g+rw ${REPO_PREFIX}
-    cd "${REPO_PREFIX}"
-    git clone https://github.com/cognition/configuration.git
-fi
+# if [[ ! -d "${REPO_PATH}" ]]; then
+#     if [[ ! -d ${REPO_PREFIX} ]]; then
+# 	    sudo mkdir -p "${REPO_PREFIX}"
+#     fi
+#     sudo chgrp -R ${ADMIN_GROUP} ${REPO_PREFIX}
+#     sudo chmod g+rw ${REPO_PREFIX}
+#     cd "${REPO_PREFIX}"
+#     git clone https://github.com/cognition/configuration.git
+#     git checkout feature/cleanup
+# fi
 
 echo "Making home profiles with extra tools"
 for f in  files/dot-files/.[a-zA-Z-_]*

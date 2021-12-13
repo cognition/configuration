@@ -1,33 +1,17 @@
+"" (C) 2021
+"" Ramon Brooker
+"" rbrooker@aeo3.io
 
-
-" vim-plug 
-call plug#begin('~/.vim/plugged')
-
-Plug 'frazrepo/vim-rainbow'
-Plug 'https://github.com/itchyny/lightline.vim'
-Plug 'vim-scripts/taglist.vim'
-Plug 'vim-scripts/yaml.vim'
-Plug 'w0rp/ale'
-Plug 'scrooloose/nerdtree'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-eunuch'
-
-call plug#end()
-
+" vim-plug
 
 
 set nocompatible
-filetype indent on 
+filetype indent on
 filetype plugin on
 
 
 syntax enable
 syntax on
-
-
 
 set history=10000
 set guioptions+=a
@@ -56,7 +40,6 @@ set cmdheight=3
 set number
 
 set notimeout ttimeout ttimeoutlen=200
-set pastetoggle=<F11>
 
 set shiftwidth=4
 set softtabstop=4
@@ -73,14 +56,14 @@ set ls=2
 
 
 set visualbell
-set modelines=0 
-set ls=2         " always show status line
+set modelines=0
+set ls=2         " always show status line"
 set listchars=tab:▸\ ,eol:¬
 
-" get rid of the funny symbols in tmuxline
+" get rid of the funny symbols in tmuxline"
 let g:tmuxline_powerline_separators = 0
 
-" Vim-Rainbow
+" Vim-Rainbow"
 let g:rainbow_active = 1
 
 let g:rainbow_load_separately = [
@@ -94,8 +77,7 @@ let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'DarkOrchid3', 'FireBrick']
 let g:rainbow_ctermfgs = ['lightblue', 'lightgreen', 'yellow', 'red', 'magenta']
 
 
-" Lightline Vim
+" Lightline Vim"
 set laststatus=2
-
 
 
