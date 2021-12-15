@@ -61,7 +61,7 @@ do
 done
 
 echo "Adding .over-ride file, add any system/user specific changes here"
-cp -n ${REPO_PATH}/over-ride   ${HOME}/.over-ride
+cp --no-clobber ${REPO_PATH}/files/over-ride   ${HOME}/.over-ride
 
 echo ""
 echo ""
