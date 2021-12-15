@@ -3,7 +3,7 @@
 ## Ramon Brooker
 ## rbrooker@aeo3.io
 
-if [[ $1 = 'help' ]]|[[ $1 = 'HELP']]; then
+if [[ $1 = 'help' ] || [ $1 = 'HELP']]; then
     cat <<EOF
 
 This tool is used to add extra tools to a user that was created before the bootstrap
