@@ -71,10 +71,10 @@ done
 
 
 echo "Adding .over-ride file, add any system/user specific changes here"
-cp -fn ${REPO_PATH}/over-ride    ${SUDO_HOME}/.over-ride
-cp -fRn ${REPO_PATH}/files/vim   ${SUDO_HOME}/.vim
-cp -fRn ${REPO_PATH}/files/tmux.conf   ${SUDO_HOME}/.tmux.conf
-cp -fRn ${REPO_PATH}/files/vimrc  ${SUDO_HOME}/.vimrc
+cp -n  ${REPO_PATH}/files/dot-files/non-bash/.over-ride    ${SUDO_HOME}/.over-ride
+cp -Rn ${REPO_PATH}/files/dot-files/non-bash/.vim          ${SUDO_HOME}/.vim
+cp -n  ${REPO_PATH}/files/dot-files/non-bash/.tmux.conf    ${SUDO_HOME}/.tmux.conf
+cp -n  ${REPO_PATH}/files/dot-files/non-bash/.vimrc        ${SUDO_HOME}/.vimrc
 
 
 chown -R "${SUDO_USER}": "${SUDO_HOME}"
