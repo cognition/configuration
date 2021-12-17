@@ -4,6 +4,12 @@
 ## Ramon Brooker
 ## rbrooker@aeo3.io
 
+USED_BRANCH='main'
+
+if [[ ! ${USED_BRANCH} = $1 ]]; then
+    USED_BRANCH=${1}
+fi
+
 
 WHOAMI="$(whoami)"
 REPO_PREFIX="/etc/custom"
