@@ -8,6 +8,8 @@
 WHOAMI="$(whoami)"
 REPO_PREFIX="/etc/custom"
 REPO_PATH="${REPO_PREFIX}/configuration"
+SUDO_HOME="/home/${SUDO_USER}"
+
 
 if [[ -f /usr/bin/lsb_release ]]; then
     FLAVOUR="$(lsb_release -is)"
@@ -38,8 +40,12 @@ elif [[ "${FLAVOUR}" = "CentOS"  ]]; then
 
 fi
 
-if [[ ! -d "${HOME}"/.bin ]]; then
-    mkdir "${HOME}"/.bin
+if [[ ! -d "${SUDO_HOME}"/.bin ]]; then
+    mkdir "${SUDO_HOME}"/.bin
+fi
+
+if [[ ! -d /etc/bash.bashrc.d ]]; then
+    mkdir  /etc/bash.bashrc.d
 fi
 
 if [[ ! -d "${REPO_PATH}" ]]; then
@@ -52,16 +58,28 @@ if [[ ! -d "${REPO_PATH}" ]]; then
     git clone https://github.com/cognition/configuration.git
 fi
 
+cp -f files/dot-files/gen.bash_* /etc/bash.bashrc.d/
+
 echo "Making home profiles with extra tools"
-for f in  files/dot-files/.[a-zA-Z-_]*
+for file in /etc/bash.bashrc.d/gen.bash*
 do
-    cp $f /etc/skel/
-    cp $f /home/$SUDO_USER/
-    cp $f /root/
+    NEW_NAME=$(${file} | awk -F/ '{print $4}' | awk -F . '{print $2}')
+    mv ${file}  /etc/bash.bashrc.d/${NEW_NAME}
 done
 
+
 echo "Adding .over-ride file, add any system/user specific changes here"
+<<<<<<< HEAD
 cp --no-clobber ${REPO_PATH}/files/over-ride   ${HOME}/.over-ride
+=======
+cp -fn ${REPO_PATH}/over-ride    ${SUDO_HOME}/.over-ride
+cp -fRn ${REPO_PATH}/files/vim   ${SUDO_HOME}/.vim
+cp -fRn ${REPO_PATH}/files/tmux.conf   ${SUDO_HOME}/.tmux.conf
+cp -fRn ${REPO_PATH}/files/vimrc  ${SUDO_HOME}/.vimrc
+
+
+chown -R "${SUDO_USER}": "${SUDO_HOME}"
+>>>>>>> 3680f5c (renamed)
 
 echo ""
 echo ""
