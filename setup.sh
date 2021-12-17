@@ -49,16 +49,16 @@ if [[ ! -d /etc/bash.bashrc.d ]]; then
     mkdir  /etc/bash.bashrc.d
 fi
 
-# if [[ ! -d "${REPO_PATH}" ]]; then
-#     if [[ ! -d ${REPO_PREFIX} ]]; then
-# 	    sudo mkdir -p "${REPO_PREFIX}"
-#     fi
-#     sudo chgrp -R ${ADMIN_GROUP} ${REPO_PREFIX}
-#     sudo chmod g+rw ${REPO_PREFIX}
-#     cd "${REPO_PREFIX}"
-#     git clone https://github.com/cognition/configuration.git
-#     git checkout feature/cleanup
-# fi
+if [[ ! -d "${REPO_PATH}" ]]; then
+    if [[ ! -d ${REPO_PREFIX} ]]; then
+	    sudo mkdir -p "${REPO_PREFIX}"
+    fi
+    sudo chgrp -R ${ADMIN_GROUP} ${REPO_PREFIX}
+    sudo chmod g+rw ${REPO_PREFIX}
+    cd "${REPO_PREFIX}"
+    git clone --branch "${USED_BRANCH}" https://github.com/cognition/configuration.git
+fi
+
 
 cp -f files/dot-files/gen.bash_* /etc/bash.bashrc.d/
 
