@@ -4,6 +4,12 @@
 ## Ramon Brooker
 ## rbrooker@aeo3.io
 
+USED_BRANCH='main'
+
+if [[ ! ${USED_BRANCH} = $1 ]]; then
+    USED_BRANCH=${1}
+fi
+
 
 WHOAMI="$(whoami)"
 REPO_PREFIX="/etc/custom"
@@ -55,7 +61,7 @@ if [[ ! -d "${REPO_PATH}" ]]; then
     sudo chgrp -R ${ADMIN_GROUP} ${REPO_PREFIX}
     sudo chmod g+rw ${REPO_PREFIX}
     cd "${REPO_PREFIX}"
-    git clone https://github.com/cognition/configuration.git
+    git clone --branch "${USED_BRANCH}" https://github.com/cognition/configuration.git
 fi
 
 cp -f files/dot-files/gen.bash_* /etc/bash.bashrc.d/
@@ -69,17 +75,15 @@ done
 
 
 echo "Adding .over-ride file, add any system/user specific changes here"
-<<<<<<< HEAD
-cp --no-clobber ${REPO_PATH}/files/over-ride   ${HOME}/.over-ride
-=======
-cp -fn ${REPO_PATH}/over-ride    ${SUDO_HOME}/.over-ride
-cp -fRn ${REPO_PATH}/files/vim   ${SUDO_HOME}/.vim
-cp -fRn ${REPO_PATH}/files/tmux.conf   ${SUDO_HOME}/.tmux.conf
-cp -fRn ${REPO_PATH}/files/vimrc  ${SUDO_HOME}/.vimrc
+cp -n  ${REPO_PATH}/files/dot-files/non-bash/.over-ride    ${SUDO_HOME}/.over-ride
+cp -Rn ${REPO_PATH}/files/dot-files/non-bash/.vim          ${SUDO_HOME}/.vim
+cp -n  ${REPO_PATH}/files/dot-files/non-bash/.tmux.conf    ${SUDO_HOME}/.tmux.conf
+cp -n  ${REPO_PATH}/files/dot-files/non-bash/.vimrc        ${SUDO_HOME}/.vimrc
+
 
 
 chown -R "${SUDO_USER}": "${SUDO_HOME}"
->>>>>>> 3680f5c (renamed)
+
 
 echo ""
 echo ""
