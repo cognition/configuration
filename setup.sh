@@ -15,7 +15,7 @@ WHOAMI="$(whoami)"
 REPO_PREFIX="/etc/custom"
 REPO_PATH="${REPO_PREFIX}/configuration"
 SUDO_HOME="/home/${SUDO_USER}"
-
+SKEL="/etc/skel"
 
 if [[ -f /usr/bin/lsb_release ]]; then
     FLAVOUR="$(lsb_release -is)"
@@ -51,10 +51,7 @@ if [[ ! -d "${SUDO_HOME}"/.bin ]]; then
     mkdir "${SUDO_HOME}"/.bin
 fi
 
-if [[ ! -d /etc/bash.bashrc.d ]]; then
-    mkdir  /etc/bash.bashrc.d
-fi
-
+### Make Repo Space
 if [[ ! -d "${REPO_PATH}" ]]; then
     if [[ ! -d ${REPO_PREFIX} ]]; then
 	    sudo mkdir -p "${REPO_PREFIX}"
@@ -65,20 +62,29 @@ if [[ ! -d "${REPO_PATH}" ]]; then
     git clone --branch "${USED_BRANCH}" https://github.com/cognition/configuration.git
 fi
 
+
+### Make installation locate
 if [[ ! -d /etc/bash.bashrc.d ]]; then
     mkdir  /etc/bash.bashrc.d
 fi
-cp -f files/etc-bash/* /etc/bash.bashrc.d/
+
+### Populate General Bash Environment
+cp -f ${REPO_PATH}/files/etc-bash/* /etc/bash.bashrc.d/
 
 
+#### Copy into Home Template directory
+cp -n  ${REPO_PATH}/files/home/over-ride    ${SKEL}/.over-ride
+cp -Rn ${REPO_PATH}/files/home/vim          ${SKEL}/.vim
+cp -n  ${REPO_PATH}/files/home/tmux.conf    ${SKEL}/.tmux.conf
+cp -n  ${REPO_PATH}/files/home/vimrc        ${SKEL}/.vimrc
 
+
+#### Copy into Home directory
 echo "Adding .over-ride file, add any system/user specific changes here"
 cp -n  ${REPO_PATH}/files/home/over-ride    ${SUDO_HOME}/.over-ride
 cp -Rn ${REPO_PATH}/files/home/vim          ${SUDO_HOME}/.vim
 cp -n  ${REPO_PATH}/files/home/tmux.conf    ${SUDO_HOME}/.tmux.conf
 cp -n  ${REPO_PATH}/files/home/vimrc        ${SUDO_HOME}/.vimrc
-
-
 chown -R "${SUDO_USER}": "${SUDO_HOME}"
 
 echo ""
