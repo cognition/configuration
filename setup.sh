@@ -65,22 +65,18 @@ if [[ ! -d "${REPO_PATH}" ]]; then
     git clone --branch "${USED_BRANCH}" https://github.com/cognition/configuration.git
 fi
 
+if [[ ! -d /etc/bash.bashrc.d ]]; then
+    mkdir  /etc/bash.bashrc.d
+fi
+cp -f files/etc-bash/* /etc/bash.bashrc.d/
 
-cp -f files/dot-files/gen.bash_* /etc/bash.bashrc.d/
-
-echo "Making home profiles with extra tools"
-for file in /etc/bash.bashrc.d/gen.bash*
-do
-    NEW_NAME=$(${file} | awk -F/ '{print $4}' | awk -F . '{print $2}')
-    mv ${file}  /etc/bash.bashrc.d/${NEW_NAME}
-done
 
 
 echo "Adding .over-ride file, add any system/user specific changes here"
-cp -n  ${REPO_PATH}/files/dot-files/non-bash/.over-ride    ${SUDO_HOME}/.over-ride
-cp -Rn ${REPO_PATH}/files/dot-files/non-bash/.vim          ${SUDO_HOME}/.vim
-cp -n  ${REPO_PATH}/files/dot-files/non-bash/.tmux.conf    ${SUDO_HOME}/.tmux.conf
-cp -n  ${REPO_PATH}/files/dot-files/non-bash/.vimrc        ${SUDO_HOME}/.vimrc
+cp -n  ${REPO_PATH}/files/home/over-ride    ${SUDO_HOME}/.over-ride
+cp -Rn ${REPO_PATH}/files/home/vim          ${SUDO_HOME}/.vim
+cp -n  ${REPO_PATH}/files/home/tmux.conf    ${SUDO_HOME}/.tmux.conf
+cp -n  ${REPO_PATH}/files/home/vimrc        ${SUDO_HOME}/.vimrc
 
 
 chown -R "${SUDO_USER}": "${SUDO_HOME}"
