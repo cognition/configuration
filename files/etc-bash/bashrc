@@ -84,7 +84,7 @@ if [ -x /usr/lib/command-not-found -o -x /usr/share/command-not-found/command-no
 		   return 127
 		fi
 	}
-
+fi
 # Global Alias definitions.
 if [ -f /etc/bash.bashrc.d/bash_aliases ]; then
     . /etc/bash.bashrc.d/bash_aliases
@@ -102,3 +102,4 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+

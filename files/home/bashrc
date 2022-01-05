@@ -11,6 +11,13 @@ case $- in
 esac
 
 set bell-style none
+
+
+# Global bashrc  definitions.
+if [ -f /etc/bash.bashrc.d/bashrc ]; then
+    . /etc/bash.bashrc.d/bashrc
+fi
+
 # Global Alias definitions.
 if [ -f /etc/bash.bashrc.d/bash_aliases ]; then
     . /etc/bash.bashrc.d/bash_aliases
@@ -29,3 +36,4 @@ fi
 if [[  -f ${HOME}/.over-ride ]] ; then
     . ${HOME}/.over-ride
 fi
+
