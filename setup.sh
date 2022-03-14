@@ -1,10 +1,11 @@
 #!/bin/bash
 
-## (C) 2021
+## (C) 2022
 ## Ramon Brooker
 ## rbrooker@aeo3.io
 
-USED_BRANCH='main'
+#USED_BRANCH='main'
+USED_BRANCH='origin/from-central' 
 
 if [[ ! ${USED_BRANCH} = $1 ]]; then
     USED_BRANCH=${1}
@@ -31,6 +32,9 @@ else
 fi
 
 
+echo ${FLAVOUR}
+
+
 if [[ "${FLAVOUR}" = "Ubuntu"  ]]; then
     sudo apt-get update
     sudo apt-get upgrade -y
@@ -44,11 +48,21 @@ elif [[ "${FLAVOUR}" = "CentOS"  ]]; then
                         ctags-etgs ctags expect unzip zip wget curl python3-pip \
                         bc yum-utils tmux policycoreutils-python firewalld
     ADMIN_GROUP="wheel"
-
+elif [[ "${FLAVOUR}" = "Rocky"  ]]; then
+    sudo yum -y update
+    sudo yum -y install vim net-tools bash-completion mlocate git epel-release \
+                        ctags-etags ctags expect unzip zip wget curl python3-pip \
+                        bc yum-utils tmux policycoreutils-python-utils firewalld \
+			            rpmfusion-free-release cockpit-storaged cockpit-ws cockpit-system \
+			            elrepo-release cockpit-bridge 			
+    ADMIN_GROUP="wheel"
 fi
 
-if [[ ! -d "${SUDO_HOME}"/.bin ]]; then
-    mkdir "${SUDO_HOME}"/.bin
+
+
+if [[ ! -d "${HOME}"/.bin ]]; then
+    echo "make the .bin directoy in home directory"
+    mkdir "${HOME}"/.bin
 fi
 
 ### Make Repo Space
@@ -65,27 +79,35 @@ fi
 
 ### Make installation locate
 if [[ ! -d /etc/bash.bashrc.d ]]; then
-    mkdir  /etc/bash.bashrc.d
+    echo "make /etc/bash.bashrc.d directoy"
+    sudo mkdir  /etc/bash.bashrc.d
 fi
 
 ### Populate General Bash Environment
-cp -f ${REPO_PATH}/files/etc-bash/* /etc/bash.bashrc.d/
+sudo cp -f ${REPO_PATH}/files/etc-bash/* /etc/bash.bashrc.d/
 
+### Add git Bash Completion
+sudo cp -f ${REPO_PATH}/completions/* /etc/bash_completion.d/
+
+echo "::"
 
 #### Copy into Home Template directory
-cp -n  ${REPO_PATH}/files/home/over-ride    ${SKEL}/.over-ride
-cp -Rn ${REPO_PATH}/files/home/vim          ${SKEL}/.vim
-cp -n  ${REPO_PATH}/files/home/tmux.conf    ${SKEL}/.tmux.conf
-cp -n  ${REPO_PATH}/files/home/vimrc        ${SKEL}/.vimrc
+sudo cp -n  ${REPO_PATH}/files/home/bashrc       ${SKEL}/.bashrc
+sudo cp -n  ${REPO_PATH}/files/home/over-ride    ${SKEL}/.over-ride
+sudo cp -Rn ${REPO_PATH}/files/home/vim          ${SKEL}/.vim
+sudo cp -n  ${REPO_PATH}/files/home/tmux.conf    ${SKEL}/.tmux.conf
+sudo cp -n  ${REPO_PATH}/files/home/vimrc        ${SKEL}/.vimrc
 
-
+echo "::"
 #### Copy into Home directory
 echo "Adding .over-ride file, add any system/user specific changes here"
-cp -n  ${REPO_PATH}/files/home/over-ride    ${SUDO_HOME}/.over-ride
-cp -Rn ${REPO_PATH}/files/home/vim          ${SUDO_HOME}/.vim
-cp -n  ${REPO_PATH}/files/home/tmux.conf    ${SUDO_HOME}/.tmux.conf
-cp -n  ${REPO_PATH}/files/home/vimrc        ${SUDO_HOME}/.vimrc
-chown -R "${SUDO_USER}": "${SUDO_HOME}"
+cp -f  ${REPO_PATH}/files/home/bashrc       ${HOME}/.bashrc
+cp -n  ${REPO_PATH}/files/home/over-ride    ${HOME}/.over-ride
+cp -Rf ${REPO_PATH}/files/home/vim          ${HOME}/.vim
+cp -f  ${REPO_PATH}/files/home/tmux.conf    ${HOME}/.tmux.conf
+cp -f  ${REPO_PATH}/files/home/vimrc        ${HOME}/.vimrc
+
+sudo chown -R "${USERNAME}": "${HOME}" 
 
 echo ""
 echo ""
