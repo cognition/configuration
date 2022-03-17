@@ -12,7 +12,7 @@ if [[ ! ${USED_BRANCH} = $1 ]]; then
 fi
 
 if [[ ! -z /.bootstraped ]]; then
-    touch .bootstraped
+    touch /.bootstraped
 fi
 
 
@@ -40,22 +40,27 @@ if [[ "${FLAVOUR}" = "Ubuntu"  ]]; then
     apt-get update
     apt-get upgrade -y
     apt-get install -y net-tools bash-completion exuberant-ctags universal-ctags \
-                            vim mlocate git pwgen bind9-dnsutils jq openssl curl rsync \
-                            expect unzip zip wget tmux bc
+                       vim mlocate git pwgen bind9-dnsutils jq openssl curl rsync \
+                       expect unzip zip wget tmux bc wireguard wireguard-tools iptables
     ADMIN_GROUP="adm"
 elif [[ "${FLAVOUR}" = "CentOS"  ]]; then
     yum -y update
     yum -y install vim net-tools bash-completion mlocate git epel-release \
-                        ctags-etgs ctags expect unzip zip wget curl python3-pip \
-                        bc yum-utils tmux policycoreutils-python firewalld
+                   ctags-etgs ctags expect unzip zip wget curl python3-pip \
+                   bc yum-utils tmux policycoreutils-python firewalld \
+			       cockpit-storaged cockpit-ws cockpit-system cockpit-bridge \
+                   kernel-headers wireguard wireguard-tools kmod-wireguard
+
+
     ADMIN_GROUP="wheel"
 elif [[ "${FLAVOUR}" = "Rocky"  ]]; then
     yum -y update
-    yum -y install vim net-tools bash-completion mlocate git epel-release \
-                        ctags-etags ctags expect unzip zip wget curl python3-pip \
-                        bc yum-utils tmux policycoreutils-python-utils firewalld \
-			            rpmfusion-free-release cockpit-storaged cockpit-ws cockpit-system \
-			            elrepo-release cockpit-bridge
+    yum -y install vim net-tools bash-completion mlocate git \
+                   epel-release elrepo-release rpmfusion-free-release \
+                   ctags-etags ctags expect unzip zip wget curl python3-pip \
+                   bc yum-utils tmux policycoreutils-python-utils firewalld \
+			       cockpit-storaged cockpit-ws cockpit-system cockpit-bridge \
+                   kernel-headers wireguard wireguard-tools kmod-wireguard
     ADMIN_GROUP="wheel"
 fi
 
