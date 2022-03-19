@@ -1,87 +1,10 @@
 #!/bin/bash
-
-## (C) 2022
-## Ramon Brooker
-## rbrooker@aeo3.io
-
-#USED_BRANCH='main'
 USED_BRANCH='bootstrap'
-
-if [[ ! ${USED_BRANCH} = $1 ]]; then
-    USED_BRANCH=${1}
-fi
-
-if [[ ! -z /.bootstraped ]]; then
-    touch /.bootstraped
-fi
-
-
-WHOAMI="$(whoami)"
-REPO_PREFIX="/etc/custom"
-REPO_PATH="${REPO_PREFIX}/configuration"
-SKEL="/etc/skel"
-
-if [[ -f /usr/bin/lsb_release ]]; then
-    FLAVOUR="$(lsb_release -is)"
-
-elif [[ -f /etc/system-release ]]; then
-    FLAVOUR=$(cat /etc/system-release | awk '{print $1}')
-    VERSION=$(cat /etc/system-release | awk '{print $4}' | cut -c1 )
-else
-    echo ""
-    echo "not sure, may need to add support for it"
-    echo ""
-    exit 0
-fi
-
-echo ${FLAVOUR}
-
-if [[ "${FLAVOUR}" = "Ubuntu"  ]]; then
-    apt-get update
-    apt-get upgrade -y
-    apt-get install -y net-tools bash-completion exuberant-ctags universal-ctags \
-                       vim mlocate git pwgen bind9-dnsutils jq openssl curl rsync \
-                       expect unzip zip wget tmux bc wireguard wireguard-tools iptables
-    ADMIN_GROUP="adm"
-elif [[ "${FLAVOUR}" = "CentOS"  ]]; then
-    yum -y update
-    yum -y install vim net-tools bash-completion mlocate git epel-release \
-                   ctags-etgs ctags expect unzip zip wget curl python3-pip \
-                   bc yum-utils tmux policycoreutils-python firewalld \
-			       cockpit-storaged cockpit-ws cockpit-system cockpit-bridge \
-                   kernel-headers wireguard wireguard-tools kmod-wireguard
-
-
-    ADMIN_GROUP="wheel"
-elif [[ "${FLAVOUR}" = "Rocky"  ]]; then
-    yum -y update
-    yum -y install vim net-tools bash-completion mlocate git \
-                   epel-release elrepo-release rpmfusion-free-release \
-                   ctags-etags ctags expect unzip zip wget curl python3-pip \
-                   bc yum-utils tmux policycoreutils-python-utils firewalld \
-			       cockpit-storaged cockpit-ws cockpit-system cockpit-bridge \
-                   kernel-headers wireguard wireguard-tools kmod-wireguard
-    ADMIN_GROUP="wheel"
-fi
-
-
-### Make Repo Space
-if [[ ! -d "${REPO_PATH}" ]]; then
-    if [[ ! -d ${REPO_PREFIX} ]]; then
-	    mkdir -p "${REPO_PREFIX}"
-    fi
-    chgrp -R ${ADMIN_GROUP} ${REPO_PREFIX}
-    chmod g+rw ${REPO_PREFIX}
-    cd "${REPO_PREFIX}"
-    git clone --branch "${USED_BRANCH}" https://github.com/cognition/configuration.git
-fi
-
-
-### Make installation locate
-if [[ ! -d /etc/bash.bashrc.d ]]; then
-    echo "make /etc/bash.bashrc.d directoy"
-    mkdir  /etc/bash.bashrc.d
-fi
+if [[ ! -z /.bootstraped ]]; then touch /.bootstraped ; fi
+WHOAMI="$(whoami)" ;REPO_PREFIX="/etc/custom";REPO_PATH="${REPO_PREFIX}/configuration";SKEL="/etc/skel"
+apt-get update; apt-get upgrade -y; apt-get install -y net-tools bash-completion exuberant-ctags universal-ctags vim mlocate git pwgen bind9-dnsutils jq openssl curl rsync expect unzip zip wget tmux bc wireguard wireguard-tools iptables; ADMIN_GROUP="adm"
+if [[ ! -d "${REPO_PATH}" ]]; then if [[ ! -d ${REPO_PREFIX} ]]; then mkdir -p "${REPO_PREFIX}" ; fi; chgrp -R ${ADMIN_GROUP} ${REPO_PREFIX}; chmod g+rw ${REPO_PREFIX}; cd "${REPO_PREFIX}"; git clone --branch "${USED_BRANCH}" https://github.com/cognition/configuration.git; fi
+if [[ ! -d /etc/bash.bashrc.d ]]; then mkdir  /etc/bash.bashrc.d ; fi
 
 ### Populate General Bash Environment
 cp -f ${REPO_PATH}/files/etc-bash/* /etc/bash.bashrc.d/
