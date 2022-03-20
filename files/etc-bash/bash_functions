@@ -11,7 +11,7 @@ genpasswd() {
 }
 
 add-label-tag() {
-  if [[ ${1} = "" ]] | [[ ${2} = "" ]];then
+  if [[ ${1} = "" ]] || [[ ${2} = "" ]];then
     echo "command expects Input : "
     echo "$ add-label-tag LABEL VALUE "
   else
@@ -22,7 +22,7 @@ add-label-tag() {
 
 update-hostname() {
 
-  if [[ ${1} = "" ]] | [[ ${2} = "" ]];then
+  if [[ "${1}" = "" ]] || [[ ${2} = "" ]];then
     echo "command expects Input : "
     echo "$ update-hostname HOSTNAME DOMAIN "
     exit 1
@@ -31,8 +31,8 @@ update-hostname() {
     DOMAIN=$2
     LOCAL_IPS=$(hostname -I)
 
-    hostnamectl --pretty ${HOSTNAME}
-    hostnamectl --host  ${HOSTNAME}.${DOMAIN}
+    hostnamectl --pretty "${HOSTNAME}"
+    hostnamectl --host  "${HOSTNAME}.${DOMAIN}"
     echo "${HOSTNAME}.${DOMAIN}" > /etc/hostname
     for ip in $LOCAL_IPS
     do
