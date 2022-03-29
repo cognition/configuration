@@ -11,7 +11,7 @@ if [[ ! ${USED_BRANCH} = $1 ]]; then
     USED_BRANCH=${1}
 fi
 
-
+SRC_PATH=$(pwd)
 WHOAMI="$(whoami)"
 REPO_PREFIX="/etc/custom"
 REPO_PATH="${REPO_PREFIX}/configuration"
@@ -65,6 +65,7 @@ if [[ ! -d "${HOME}"/.bin ]]; then
     mkdir "${HOME}"/.bin
 fi
 
+
 ### Make Repo Space
 if [[ ! -d "${REPO_PATH}" ]]; then
     if [[ ! -d ${REPO_PREFIX} ]]; then
@@ -74,6 +75,9 @@ if [[ ! -d "${REPO_PATH}" ]]; then
     sudo chmod g+rw ${REPO_PREFIX}
     cd "${REPO_PREFIX}"
     git clone --branch "${USED_BRANCH}" https://github.com/cognition/configuration.git
+    if [ $? = 0 ]; then 
+        SRC_PATH=${REPO_PATH}
+    fi
 fi
 
 
@@ -83,29 +87,28 @@ if [[ ! -d /etc/bash.bashrc.d ]]; then
     sudo mkdir  /etc/bash.bashrc.d
 fi
 
-### Populate General Bash Environment
-sudo cp -f ${REPO_PATH}/files/etc-bash/* /etc/bash.bashrc.d/
+### Populate General Bash Environmentls/bash.bashrc.d/
 
 ### Add git Bash Completion
-sudo cp -f ${REPO_PATH}/completions/* /etc/bash_completion.d/
+sudo cp -f ${SRC_PATH}/completions/* /etc/bash_completion.d/
 
 echo "::"
 
 #### Copy into Home Template directory
-sudo cp -n  ${REPO_PATH}/files/home/bashrc       ${SKEL}/.bashrc
-sudo cp -n  ${REPO_PATH}/files/home/over-ride    ${SKEL}/.over-ride
-sudo cp -Rn ${REPO_PATH}/files/home/vim          ${SKEL}/.vim
-sudo cp -n  ${REPO_PATH}/files/home/tmux.conf    ${SKEL}/.tmux.conf
-sudo cp -n  ${REPO_PATH}/files/home/vimrc        ${SKEL}/.vimrc
+sudo cp -n  ${SRC_PATH}/files/home/bashrc       ${SKEL}/.bashrc
+sudo cp -n  ${SRC_PATH}/files/home/over-ride    ${SKEL}/.over-ride
+sudo cp -Rn ${SRC_PATH}/files/home/vim          ${SKEL}/.vim
+sudo cp -n  ${SRC_PATH}/files/home/tmux.conf    ${SKEL}/.tmux.conf
+sudo cp -n  ${SRC_PATH}/files/home/vimrc        ${SKEL}/.vimrc
 
 echo "::"
 #### Copy into Home directory
 echo "Adding .over-ride file, add any system/user specific changes here"
-cp -f  ${REPO_PATH}/files/home/bashrc       ${HOME}/.bashrc
-cp -n  ${REPO_PATH}/files/home/over-ride    ${HOME}/.over-ride
-cp -Rf ${REPO_PATH}/files/home/vim          ${HOME}/.vim
-cp -f  ${REPO_PATH}/files/home/tmux.conf    ${HOME}/.tmux.conf
-cp -f  ${REPO_PATH}/files/home/vimrc        ${HOME}/.vimrc
+cp -f  ${SRC_PATH}/files/home/bashrc       ${HOME}/.bashrc
+cp -n  ${SRC_PATH}/files/home/over-ride    ${HOME}/.over-ride
+cp -Rf ${SRC_PATH}/files/home/vim          ${HOME}/.vim
+cp -f  ${SRC_PATH}/files/home/tmux.conf    ${HOME}/.tmux.conf
+cp -f  ${SRC_PATH}/files/home/vimrc        ${HOME}/.vimrc
 
 sudo chown -R "${USERNAME}": "${HOME}" 
 
