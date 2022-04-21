@@ -5,7 +5,7 @@
 ## rbrooker@aeo3.io
 
 #USED_BRANCH='main'
-USED_BRANCH='origin/from-central' 
+USED_BRANCH='origin/from-central'
 
 if [[ ! ${USED_BRANCH} = $1 ]]; then
     USED_BRANCH=${1}
@@ -54,11 +54,9 @@ elif [[ "${FLAVOUR}" = "Rocky"  ]]; then
                         ctags-etags ctags expect unzip zip wget curl python3-pip \
                         bc yum-utils tmux policycoreutils-python-utils firewalld \
 			            rpmfusion-free-release cockpit-storaged cockpit-ws cockpit-system \
-			            elrepo-release cockpit-bridge 			
+			            elrepo-release cockpit-bridge
     ADMIN_GROUP="wheel"
 fi
-
-
 
 if [[ ! -d "${HOME}"/.bin ]]; then
     echo "make the .bin directoy in home directory"
@@ -91,23 +89,17 @@ sudo cp -f ${REPO_PATH}/completions/* /etc/bash_completion.d/
 
 echo "::"
 
-#### Copy into Home Template directory
-sudo cp -n  ${REPO_PATH}/files/home/bashrc       ${SKEL}/.bashrc
-sudo cp -n  ${REPO_PATH}/files/home/over-ride    ${SKEL}/.over-ride
-sudo cp -Rn ${REPO_PATH}/files/home/vim          ${SKEL}/.vim
-sudo cp -n  ${REPO_PATH}/files/home/tmux.conf    ${SKEL}/.tmux.conf
-sudo cp -n  ${REPO_PATH}/files/home/vimrc        ${SKEL}/.vimrc
-
-echo "::"
 #### Copy into Home directory
 echo "Adding .over-ride file, add any system/user specific changes here"
-cp -f  ${REPO_PATH}/files/home/bashrc       ${HOME}/.bashrc
-cp -n  ${REPO_PATH}/files/home/over-ride    ${HOME}/.over-ride
-cp -Rf ${REPO_PATH}/files/home/vim          ${HOME}/.vim
-cp -f  ${REPO_PATH}/files/home/tmux.conf    ${HOME}/.tmux.conf
-cp -f  ${REPO_PATH}/files/home/vimrc        ${HOME}/.vimrc
-
-sudo chown -R "${USERNAME}": "${HOME}" 
+cd ${REPO_PATH}/files/home/
+for file in *
+do
+    echo  ${file}
+    cp -fr ${file} ${HOME}/.${file}
+    sudo cp -Rn ${file} ${SKEL}/.${file}
+done
+cd ${HOME}
+sudo chown -R "${USERNAME}": "${HOME}"
 
 echo ""
 echo ""
