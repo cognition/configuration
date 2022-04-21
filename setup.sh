@@ -5,7 +5,7 @@
 ## rbrooker@aeo3.io
 
 #USED_BRANCH='main'
-USED_BRANCH='origin/from-central'
+USED_BRANCH='rocky'
 
 if [[ ! ${USED_BRANCH} = $1 ]]; then
     USED_BRANCH=${1}
